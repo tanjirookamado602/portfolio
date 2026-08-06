@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!--
+    If you are serving your web app in a path other than the root, change the
+    href value below to reflect the base path you are serving from.
+
+    The path provided below has to start and end with a slash "/" in order for
+    it to work correctly.
+
+    For more details:
+    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
+
+    This is a placeholder for base href that will be replaced by the value of
+    the `--base-href` argument provided to `flutter build`.
+  -->
+  <base href="$FLUTTER_BASE_HREF">
+
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="description" content="Portfolio of Muhammad Assad Ullah - Flutter Developer & AI Enthusiast">
+
+  <!-- iOS meta tags & icons -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="Assad Portfolio">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png"/>
+
+  <title>Muhammad Assad Ullah | Portfolio</title>
+  <link rel="manifest" href="manifest.json">
+  <!-- Firebase web SDK placeholder: replace REPLACE_* values with your Firebase Web app config -->
+  <script type="module">
+    // Minimal Firebase modular SDK initialization for the web platform.
+    // After you create a Firebase project and register a Web app, paste the
+    // config object below (apiKey, authDomain, projectId, etc.).
+    // FlutterFire will still call Firebase.initializeApp() in Dart; this
+    // snippet ensures Firebase SDK is available on the page for hosting.
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+    import { getAuth } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+    import { getFirestore } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAe3oWeoYsQ_MJSfqfAcAuGadZM1mKPbb0",
+      authDomain: "one-tap-screenshot.firebaseapp.com",
+      projectId: "one-tap-screenshot",
+      storageBucket: "one-tap-screenshot.firebasestorage.app",
+      messagingSenderId: "615142260315",
+      appId: "1:615142260315:web:ffb80b4b816486f656897e",
+      measurementId: "G-JGWTY23J5C"
+    };
+
+    // Initialize Firebase (optional here; Dart code will also initialize)
+    try {
+      const app = initializeApp(firebaseConfig);
+      // expose for debugging if needed
+      window.firebaseApp = app;
+      window.firebaseAuth = getAuth(app);
+      window.firebaseDb = getFirestore(app);
+      console.log('Firebase web SDK initialized');
+    } catch (e) {
+      console.warn('Firebase web SDK initialization skipped or failed:', e);
+    }
+  </script>
+</head>
+<body>
+  <script src="flutter_bootstrap.js" async></script>
+</body>
+</html>

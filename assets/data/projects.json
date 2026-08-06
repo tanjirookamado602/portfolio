@@ -1,0 +1,50 @@
+[
+  {
+    "title": "AI Chat Application",
+    "description": "A modern Flutter chat application powered by AI APIs with real-time messaging and intelligent responses",
+  "image": "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1200&q=80",
+    "tech": ["Flutter", "OpenAI", "Provider", "Firebase"],
+    "github": "https://github.com/AsadullahAJ/ai_chat",
+    "demo": "https://asad-ai-chat.web.app"
+  },
+  {
+    "title": "E-Commerce Platform",
+    "description": "Full-featured e-commerce mobile app with payment integration, cart management, and order tracking",
+  "image": "https://images.unsplash.com/photo-1503602642458-232111445657?w=1200&q=80",
+    "tech": ["Flutter", "Firebase", "Stripe", "Bloc"],
+    "github": "https://github.com/AsadullahAJ/ecommerce",
+    "demo": "https://asad-shop.web.app"
+  },
+  {
+    "title": "Weather Forecast App",
+    "description": "Beautiful weather application with 7-day forecast, location-based weather, and animated backgrounds",
+  "image": "https://images.unsplash.com/photo-1505751172876-fa1923c5c528?w=1200&q=80",
+    "tech": ["Flutter", "OpenWeather API", "Riverpod", "Hive"],
+    "github": "https://github.com/AsadullahAJ/weather",
+    "demo": "https://asad-weather.web.app"
+  },
+  {
+    "title": "Task Management System",
+    "description": "Productivity app with kanban boards, team collaboration, and deadline reminders",
+  "image": "https://images.unsplash.com/photo-1523475496153-3d6cc8f24f30?w=1200&q=80",
+    "tech": ["Flutter", "Supabase", "GetX", "Local Notifications"],
+    "github": "https://github.com/AsadullahAJ/tasks",
+    "demo": "https://asad-tasks.web.app"
+  },
+  {
+    "title": "Fitness Tracker",
+    "description": "Health and fitness tracking app with workout plans, calorie counter, and progress analytics",
+  "image": "https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?w=1200&q=80",
+    "tech": ["Flutter", "HealthKit", "Charts", "SQLite"],
+    "github": "https://github.com/AsadullahAJ/fitness",
+    "demo": "https://asad-fitness.web.app"
+  },
+  {
+    "title": "Social Media Dashboard",
+    "description": "Real-time social media analytics dashboard with post scheduling and engagement metrics",
+  "image": "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=1200&q=80",
+    "tech": ["Flutter", "GraphQL", "Provider", "Web Sockets"],
+    "github": "https://github.com/AsadullahAJ/social",
+    "demo": "https://asad-social.web.app"
+  }
+]

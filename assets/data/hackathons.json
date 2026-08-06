@@ -1,0 +1,14 @@
+{
+  "title": "Hackathons & Events",
+  "description": "Competitions and events I've participated in",
+  "hackathons": [
+    {
+      "title": "Sample Hackathon",
+      "event": "Tech Competition 2024",
+      "description": "Built an innovative solution in 48 hours",
+      "date": "2024",
+      "achievement": "Winner",
+      "link": ""
+    }
+  ]
+}
