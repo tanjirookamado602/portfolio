@@ -655,6 +655,11 @@ class _ComprehensiveAdminPanelState extends State<ComprehensiveAdminPanel>
     return Scaffold(
       backgroundColor: AppTheme.primaryBackground,
       appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_rounded),
+          tooltip: 'Back to Website',
+          onPressed: () => Navigator.of(context).pushReplacementNamed('/'),
+        ),
         title: Row(
           children: [
             Container(
@@ -769,36 +774,87 @@ class _ComprehensiveAdminPanelState extends State<ComprehensiveAdminPanel>
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.delete_sweep),
+            icon: const Icon(Icons.open_in_browser_rounded),
+            tooltip: 'View Portfolio Site',
+            onPressed: () => Navigator.of(context).pushReplacementNamed('/'),
+          ),
+          IconButton(
+            icon: const Icon(Icons.delete_sweep_outlined),
             tooltip: 'Clear All Firebase Data',
             onPressed: _showClearDataDialog,
           ),
-          // Show current signed-in admin email (if available) for debugging
+          IconButton(
+            key: const Key('btn_refresh'),
+            onPressed: _loadContent,
+            icon: const Icon(Icons.refresh_rounded),
+            tooltip: 'Reload Content',
+          ),
+          // Show current signed-in admin email (if available)
           Builder(builder: (ctx) {
             final user = FirebaseAuth.instance.currentUser;
             final email = user?.email ?? '';
             if (email.isNotEmpty) {
-              return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                child: Text(
-                  email,
-                  style: const TextStyle(
-                    color: AppTheme.textSecondary,
-                    fontSize: 13,
-                  ),
+              return Container(
+                margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                decoration: BoxDecoration(
+                  color: AppTheme.cardColor,
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(color: AppTheme.borderColor.withOpacity(0.4)),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Icon(Icons.verified_user_rounded, size: 14, color: AppTheme.accentCyan),
+                    const SizedBox(width: 6),
+                    Text(
+                      email,
+                      style: const TextStyle(
+                        color: AppTheme.textColor,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
                 ),
               );
             }
             return const SizedBox.shrink();
           }),
-          const SizedBox(width: 8),
           IconButton(
-            key: const Key('btn_refresh'),
-            onPressed: _loadContent,
-            icon: const Icon(Icons.refresh),
-            tooltip: 'Reload Content',
+            icon: const Icon(Icons.logout_rounded),
+            tooltip: 'Sign Out',
+            onPressed: () async {
+              final confirm = await showDialog<bool>(
+                context: context,
+                builder: (ctx) => AlertDialog(
+                  backgroundColor: AppTheme.cardColor,
+                  title: const Text('Sign Out', style: TextStyle(color: AppTheme.textColor)),
+                  content: const Text(
+                    'Are you sure you want to sign out of the admin panel?',
+                    style: TextStyle(color: AppTheme.textSecondary),
+                  ),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.of(ctx).pop(false),
+                      child: const Text('Cancel'),
+                    ),
+                    ElevatedButton(
+                      onPressed: () => Navigator.of(ctx).pop(true),
+                      style: ElevatedButton.styleFrom(backgroundColor: AppTheme.accentBlue),
+                      child: const Text('Sign Out'),
+                    ),
+                  ],
+                ),
+              );
+              if (confirm == true) {
+                await FirebaseAuth.instance.signOut();
+              }
+            },
           ),
+          const SizedBox(width: 4),
           Container(
+            margin: const EdgeInsets.symmetric(vertical: 8),
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [
@@ -808,12 +864,12 @@ class _ComprehensiveAdminPanelState extends State<ComprehensiveAdminPanel>
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               ),
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(10),
               boxShadow: [
                 BoxShadow(
                   color: AppTheme.accentBlue.withOpacity(0.4),
-                  blurRadius: 12,
-                  offset: const Offset(0, 4),
+                  blurRadius: 10,
+                  offset: const Offset(0, 3),
                 ),
               ],
             ),
@@ -823,29 +879,28 @@ class _ComprehensiveAdminPanelState extends State<ComprehensiveAdminPanel>
                 backgroundColor: Colors.transparent,
                 foregroundColor: Colors.white,
                 shadowColor: Colors.transparent,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               ),
               key: const Key('btn_save_all'),
               child: _isSaving
                   ? const SizedBox(
-                      width: 20,
-                      height: 20,
+                      width: 18,
+                      height: 18,
                       child: CircularProgressIndicator(
-                        strokeWidth: 2.5,
+                        strokeWidth: 2,
                         valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                       ),
                     )
                   : const Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(Icons.cloud_upload, size: 20),
+                        Icon(Icons.cloud_upload_rounded, size: 18),
                         SizedBox(width: 8),
                         Text(
                           'Save All',
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
-                            fontSize: 16,
+                            fontSize: 14,
                           ),
                         ),
                       ],
@@ -862,7 +917,7 @@ class _ComprehensiveAdminPanelState extends State<ComprehensiveAdminPanel>
             Container(
               width: double.infinity,
               margin: const EdgeInsets.all(16),
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: _statusMessage.contains('Error')
@@ -895,7 +950,7 @@ class _ComprehensiveAdminPanelState extends State<ComprehensiveAdminPanel>
                     color: _statusMessage.contains('Error')
                         ? AppTheme.errorColor
                         : AppTheme.successColor,
-                    size: 24,
+                    size: 22,
                   ),
                   const SizedBox(width: 12),
                   Expanded(
@@ -909,6 +964,12 @@ class _ComprehensiveAdminPanelState extends State<ComprehensiveAdminPanel>
                         fontSize: 14,
                       ),
                     ),
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.close_rounded, size: 18),
+                    color: AppTheme.textSecondary,
+                    onPressed: () => setState(() => _statusMessage = ''),
+                    tooltip: 'Dismiss',
                   ),
                 ],
               ),

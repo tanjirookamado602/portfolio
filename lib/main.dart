@@ -220,6 +220,10 @@ class _RootState extends State<_Root> {
               _FooterHoverLink(
                   label: 'LinkedIn',
                   url: 'https://linkedin.com/in/muhammad-assad-ullah'),
+              const SizedBox(width: 24),
+              _FooterHoverLink(
+                  label: 'Admin Portal',
+                  onTap: () => Navigator.of(context).pushNamed('/admin')),
             ],
           ),
         ],
@@ -230,9 +234,14 @@ class _RootState extends State<_Root> {
 
 class _FooterHoverLink extends StatefulWidget {
   final String label;
-  final String url;
+  final String? url;
+  final VoidCallback? onTap;
 
-  const _FooterHoverLink({required this.label, required this.url});
+  const _FooterHoverLink({
+    required this.label,
+    this.url,
+    this.onTap,
+  });
 
   @override
   State<_FooterHoverLink> createState() => _FooterHoverLinkState();
@@ -248,7 +257,13 @@ class _FooterHoverLinkState extends State<_FooterHoverLink> {
       onEnter: (_) => setState(() => _isHovered = true),
       onExit: (_) => setState(() => _isHovered = false),
       child: GestureDetector(
-        onTap: () => UrlUtils.launch(widget.url),
+        onTap: () {
+          if (widget.onTap != null) {
+            widget.onTap!();
+          } else if (widget.url != null) {
+            UrlUtils.launch(widget.url!);
+          }
+        },
         child: Text(
           widget.label,
           style: AppTheme.labelMeta.copyWith(

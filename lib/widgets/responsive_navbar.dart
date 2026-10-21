@@ -133,10 +133,16 @@ class _ResponsiveNavbarState extends State<ResponsiveNavbar>
 
   Widget _buildDesktopNav() {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         _buildLogo(),
-        _buildNavItems(),
+        const SizedBox(width: 16),
+        Expanded(
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: _buildNavItems(),
+          ),
+        ),
+        const SizedBox(width: 16),
         _buildAdminButton(),
       ],
     );
@@ -146,21 +152,17 @@ class _ResponsiveNavbarState extends State<ResponsiveNavbar>
     return Column(
       children: [
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            _buildLogo(),
-            Row(
-              children: [
-                _buildAdminButton(),
-                const SizedBox(width: 8),
-                IconButton(
-                  onPressed: _toggleMenu,
-                  icon: Icon(
-                    _isMenuOpen ? Icons.close : Icons.menu,
-                    color: AppTheme.textPrimary,
-                  ),
-                ),
-              ],
+            Expanded(child: _buildLogo()),
+            const SizedBox(width: 8),
+            _buildAdminButton(),
+            const SizedBox(width: 4),
+            IconButton(
+              onPressed: _toggleMenu,
+              icon: Icon(
+                _isMenuOpen ? Icons.close : Icons.menu,
+                color: AppTheme.textPrimary,
+              ),
             ),
           ],
         ),
@@ -217,18 +219,32 @@ class _ResponsiveNavbarState extends State<ResponsiveNavbar>
         borderRadius: BorderRadius.circular(10),
       ),
       child: Column(
-        children: _navItems.map((item) {
-          final isActive = _currentActiveSection == item['key'];
-          return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 4),
-            child: _buildMobileNavItem(
-              label: item['label'],
-              icon: item['icon'],
-              isActive: isActive,
-              onTap: () => _onNavItemTap(item['key']),
-            ),
-          );
-        }).toList(),
+        children: [
+          ..._navItems.map((item) {
+            final isActive = _currentActiveSection == item['key'];
+            return Padding(
+              padding: const EdgeInsets.symmetric(vertical: 4),
+              child: _buildMobileNavItem(
+                label: item['label'],
+                icon: item['icon'],
+                isActive: isActive,
+                onTap: () => _onNavItemTap(item['key']),
+              ),
+            );
+          }),
+          const SizedBox(height: 8),
+          const Divider(color: AppTheme.borderSubtle),
+          const SizedBox(height: 4),
+          _buildMobileNavItem(
+            label: 'Admin Portal',
+            icon: Icons.admin_panel_settings_rounded,
+            isActive: false,
+            onTap: () {
+              _toggleMenu();
+              Navigator.of(context).pushNamed('/admin');
+            },
+          ),
+        ],
       ),
     );
   }
@@ -277,16 +293,50 @@ class _ResponsiveNavbarState extends State<ResponsiveNavbar>
   }
 
   Widget _buildAdminButton() {
-    return TextButton(
-      onPressed: () {
-        print('Admin button pressed');
-        Navigator.of(context).pushNamed('/admin');
-      },
-      style: TextButton.styleFrom(
-        foregroundColor: AppTheme.textFaint,
-        textStyle: AppTheme.labelMeta.copyWith(fontSize: 12),
+    return Tooltip(
+      message: 'Admin Dashboard',
+      child: MouseRegion(
+        cursor: SystemMouseCursors.click,
+        child: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            borderRadius: BorderRadius.circular(8),
+            onTap: () {
+              Navigator.of(context).pushNamed('/admin');
+            },
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+              decoration: BoxDecoration(
+                color: AppTheme.bgSurfaceElevated,
+                borderRadius: BorderRadius.circular(8),
+                border: Border.all(
+                  color: AppTheme.accentPrimary.withOpacity(0.35),
+                  width: 1,
+                ),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Icon(
+                    Icons.admin_panel_settings_rounded,
+                    size: 16,
+                    color: AppTheme.accentPrimary,
+                  ),
+                  const SizedBox(width: 6),
+                  Text(
+                    'Admin',
+                    style: AppTheme.labelMeta.copyWith(
+                      color: AppTheme.textPrimary,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 12,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
       ),
-      child: const Text('Admin'),
     );
   }
 }
